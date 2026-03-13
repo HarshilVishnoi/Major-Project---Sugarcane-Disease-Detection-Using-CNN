@@ -1,0 +1,163 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f8f9f5;
+}
+
+/* NAVBAR */
+.navbar {
+    background: #1f3b1f;
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 25px;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+}
+
+/* HERO */
+.hero {
+    display: flex;
+    padding: 50px;
+}
+
+.hero-left {
+    position: relative;
+    width: 50%;
+}
+
+.hero-left img {
+    width: 100%;
+    border-radius: 20px;
+}
+
+.overlay-box {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: rgba(31,59,31,0.8);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 15px;
+}
+
+/* CTA */
+.cta {
+    background: #1f3b1f;
+    color: white;
+    text-align: center;
+    padding: 40px;
+}
+
+.btn {
+    background: white;
+    color: #1f3b1f;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 25px;
+}
+
+/* DISEASES */
+.diseases {
+    padding: 50px;
+    text-align: center;
+}
+
+.disease-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 25px;
+}
+
+.disease-card {
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.disease-card:hover {
+    transform: translateY(-10px);
+}
+
+.disease-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+}
+
+/* FOOTER */
+footer {
+    background: #1f3b1f;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+.team-section {
+  padding: 80px 10%;
+  background: #fafcf8;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 36px;
+  color: #1f3b1f;
+  margin-bottom: 60px;
+  letter-spacing: 2px;
+}
+
+.team-row {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  margin-bottom: 80px;
+}
+
+.team-row.reverse {
+  flex-direction: row-reverse;
+}
+
+.team-img img {
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+}
+
+.team-info h3 {
+  font-size: 26px;
+  color: #1f3b1f;
+}
+
+.team-info .role {
+  color: #4f6f52;
+  font-weight: 600;
+  margin: 8px 0;
+}
+
+.team-info .desc {
+  color: #5f6f60;
+  line-height: 1.7;
+  max-width: 600px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .team-row,
+  .team-row.reverse {
+    flex-direction: column;
+    text-align: center;
+  }
+}

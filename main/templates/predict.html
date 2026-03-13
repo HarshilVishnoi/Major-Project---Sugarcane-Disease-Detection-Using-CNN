@@ -1,0 +1,856 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PREDICTION PAGE</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+  <style>
+    :root{
+      --dark-green:#1f3b1f;
+      --light-bg:#fafcf8;
+      --text-green:#4f6f52;
+      --card-bg:#ffffff;
+    }
+    *{box-sizing:border-box;margin:0;padding:0;font-family: 'Poppins', sans-serif;}
+    body{background: var(--light-bg);color:#333;}
+
+    /* NAVBAR */     
+    .navbar{
+      position: sticky;
+      top: 0;
+      z-index: 1000; 
+      background:var(--dark-green);
+      padding:30px 100px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      transition: box-shadow 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+
+    .nav-logo{
+      height: 50px;
+      max-height: 48px;
+      width: auto;
+      border-radius: 50%;
+    }
+
+
+    .nav-title {
+      font-size: 26px;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      font-family: 'Poppins', sans-serif;
+    }
+
+
+    .nav-subtitle {
+      display: block;
+      font-size: 14px;
+      color: #b7e4b7;
+    }
+
+    .nav-links{
+      display:flex;
+      gap:35px;
+    }
+    .nav-links a{
+      color:#e9f3ea;
+      text-decoration:none;
+      font-size:18px;
+      position:relative;
+    }
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-6px;
+      width:0;height:2px;
+      background:#cfe3d1;
+      transition:.3s;
+    }
+    .nav-links a:hover::after{width:100%;}
+
+    /* PREDICTION SECTION */
+        .prediction-section {
+            padding: 80px 10%;
+            display: flex;
+            gap: 60px;
+            align-items: center;
+            background: linear-gradient(135deg, #eef6ee, #f6fbf6);;
+        }
+
+        .prediction-left {
+            flex: 1;
+        }
+
+        .prediction-left h1 {
+            font-size: 42px;
+            color: #1f3b1f;
+            margin-bottom: 20px;
+        }
+
+        .prediction-left p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #556b55;
+        }
+
+        .prediction-right {
+            flex: 1;
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+/* Upload box */
+.upload-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    max-width: 420px;
+    margin: 0 auto;
+
+    border: 2px dashed #8bc34a;
+    padding: 35px 25px;
+    border-radius: 16px;
+
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #fcfff8;
+}
+
+.upload-box:hover {
+    background: #f1f7ed;
+    border-color: #6fa83a;
+    transform: translateY(-2px);
+}
+
+.upload-box img {
+    width: 70px;
+    margin-bottom: 12px;
+}
+
+.upload-box p {
+    color: #4f6f52;
+    font-size: 15px;
+    text-align: center;
+    margin: 0;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+button {
+    margin-top: 30px;
+    padding: 14px 40px;
+    border: none;
+    border-radius: 30px;
+    background: #1f3b1f;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #2e5a2e;
+}
+
+.upload-box:has(input[type="file"]:focus),
+.upload-box:has(input[type="file"]:valid) {
+    border-style: solid;
+    background: #eef6e8;
+}
+
+
+        /* ================= LOADER ================= */
+        .loader {
+            display: none;
+            margin: 25px auto;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #ddd;
+            border-top: 5px solid #8bc34a;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+ 
+
+/* Fullscreen center container */
+.prediction-fullscreen {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+}
+
+/* Wrapper */
+.prediction-wrapper {
+    width: 100%;
+    max-width: 900px;
+}
+
+/* Card */
+.prediction-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 60px 40px;
+    text-align: center;
+    margin: auto;
+    border: 1px solid rgba(0,0,0,0.04);
+    animation: fadeUp 0.6s ease-out;
+}
+
+/* Title */
+.prediction-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #1f3d1f;
+}
+
+/* Result Image */
+.result-image {
+    display: block;
+    margin: 0 auto 30px;
+    width: 220px;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+
+
+/* Disease name */
+.prediction-disease {
+    font-size: 2.8rem;
+    font-weight: 800;
+    color: #2e7d32;
+    margin-bottom: 40px;
+}
+
+/* Confidence */
+.confidence-box {
+    display: inline-flex;
+    align-items: center;
+    gap: 15px;
+    background: #f3f9f3;
+    padding: 15px 30px;
+    border-radius: 50px;
+    font-size: 18px;
+}
+
+.confidence-box strong {
+    color: #1565c0;
+    font-size: 20px;
+}
+
+.info-section {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.info-section h4 {
+    font-weight: 700;
+    margin-top: 25px;
+    color: #1f3d1f;
+}
+
+.info-section p {
+    margin-top: 8px;
+    color: #444;
+    line-height: 1.7;
+    font-size: 1.05rem;
+}
+
+/* Animation */
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+
+/* SCROLL UP */
+.scroll-up{
+    position:fixed;
+    right:22px;bottom:24px;
+    width:55px;height:55px;
+    border-radius:50%;
+    background:#1f3b1f;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+/* HOW TO USE SECTION */
+.how-to-use-section {
+    padding: 80px 10%;
+    text-align: center;
+    background: #f9fbf7;
+}
+
+.how-to-use-section h2 {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 40px;
+    color: #1f3b1f;
+    margin-bottom: 10px;
+}
+
+.how-desc {
+    max-width: 650px;
+    margin: 0 auto 40px;
+    font-size: 16px;
+    color: #556b55;
+    line-height: 1.7;
+}
+
+/* Video container */
+.video-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Thumbnail */
+.video-thumbnail {
+    position: relative;
+    cursor: pointer;
+}
+
+.video-thumbnail img {
+    width: 100%;
+    display: block;
+    border-radius: 18px;
+}
+
+/* Play button */
+.play-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(31, 59, 31, 0.85);
+    color: #fff;
+    font-size: 45px;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+}
+
+.video-thumbnail:hover .play-btn {
+    transform: translate(-50%, -50%) scale(1.1);
+    background: rgba(31, 59, 31, 1);
+}
+
+/* Hide video initially */
+.video-wrapper video {
+    display: none;
+    width: 100%;
+    border-radius: 18px;
+}
+
+
+.how-to-use-section {
+    animation: fadeUp 0.8s ease;
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+    /* FOOTER */
+    footer{
+      background:#162b16;
+      color:#dfeee0;
+      padding:64px 72px 32px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:40px;
+      margin-bottom:32px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    footer h3{
+      margin-bottom:10px;
+      color:#ffffff;
+      justify-content: center;
+      text-align: center;
+    }
+
+    footer p, footer a{
+      font-size:14px;
+      line-height:1.7 ;
+      color:#cfe3d1;
+      text-decoration:none;
+      justify-content: center;
+      text-align: center;
+    }
+
+    footer a:hover{
+      color:#ffffff;
+    }
+
+    .footer-bottom{
+      text-align:center;
+      font-size:14px;
+      color:#bcd4be;
+      border-top:1px solid rgba(255,255,255,.15);
+      padding-top:20px;
+    }
+
+    /* ================= RESPONSIVE ================= */
+    @media (max-width: 900px) {
+        .prediction-section {
+            flex-direction: column;
+            text-align: center;
+        }
+    }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+  <nav class="navbar">
+    
+    <div class="nav-left">
+        <img src="{% static 'images/Logo1.png' %}" class="nav-logo">
+        <div>
+            <span class="nav-title">CROPGUARD</span>
+            <small class="nav-subtitle">Sugarcane Disease Detection</small>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'predict' %}">Prediction</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </div>
+  </nav>
+
+<!-- PREDICTION SECTION -->
+<section class="prediction-section">
+
+    <div class="prediction-left">
+        <h1 style="font-family: 'Times New Roman', Times, serif;font-size: 60px;">Sugarcane Disease Prediction</h1>
+        <p>
+            Upload a clear image of a sugarcane leaf and let our
+            CNN-based deep learning model analyze disease patterns,
+            discoloration, and texture variations to predict the disease
+            with confidence.
+        </p>
+    </div>
+
+    <div class="prediction-right">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="upload-box">
+                <label for="imageInput" class="upload-label">
+
+                    <!-- DEFAULT PREVIEW IMAGE -->
+                    <img 
+                        id="defaultPreview"
+                        src="{% static 'images/Upload_Image.png' %}" 
+                        alt="Upload"
+                        style="width:80px; margin-bottom:10px;"
+                    >
+
+                    <!-- SELECTED IMAGE PREVIEW (hidden initially) -->
+                    <img id="previewImage" src="#" alt="" style="display:none;width:200px;height: 100px; border-radius:10px;" />
+                    <p id="uploadText">Click to upload sugarcane leaf image</p>
+                
+                </label>
+
+                <input 
+                    type="file" 
+                    id="imageInput" 
+                    name="image" 
+                    accept="image/*" 
+                    hidden 
+                    required
+                >
+            </div>
+
+            <button type="submit">Predict Disease</button>
+
+        </form>
+    </div>
+</section>
+
+<section>
+    <div class="loader" id="loader"></div>
+</section>
+
+{% if prediction %}
+<section class="prediction-fullscreen">    
+    <div class="prediction-wrapper">
+
+        <div class="prediction-card">               
+            <h2 class="prediction-title" style="font-family: Times New Roman;font-size: 50px;font-weight: 500;margin-bottom: 70px;">
+                — Prediction Result —
+            </h2>
+
+            {% if image_url %}
+            <img src="{{ image_url }}" class="result-image" alt="Uploaded Leaf" style="width: 400px;height: 300px;">
+            {% endif %}
+
+            <div class="confidence-box">
+                <span>Predicted Disease:</span>
+                <strong>{{ prediction }}</strong>
+            </div>
+            <br></br>
+
+            <div class="confidence-box">
+                <span>Disease Category:</span>
+                <strong>
+                    {% if prediction == "Healthy" %}
+                    <span>
+                        {{ disease_meta.type }}
+                    </span>
+                    {% else %}
+                    <span>
+                        {{ disease_meta.type }}
+                    </span>
+                    {% endif %}
+                </strong>
+            </div>
+            <br></br>
+
+            <div class="confidence-box">
+                <span>Prediction Confidence:</span>
+                <strong>{{ confidence }}%</strong>
+            </div>
+            <br></br>
+
+            <small class="text-muted fst-italic">
+                *Confidence represents the model’s prediction certainty for this image, not overall accuracy.*
+            </small>
+            
+
+            <!-- ================= SYMPTOMS / CAUSES / REMEDIES ================= -->
+            {% if prediction %}
+            <div class="row justify-content-center mt-5">
+                <div class="col-lg-10">
+
+                    <div class="card shadow-sm p-4 mb-4 border-start border-danger border-2">
+                        <h5 class="text-danger">🦠 Symptoms</h5>
+                        <p class="text-muted mb-0">
+                            {{ symptoms }}
+                        </p>
+                    </div>
+
+                    <div class="card shadow-sm p-4 mb-4 border-start border-warning border-2">
+                        <h5 class="text-warning">⚠️ Causes</h5>
+                        <p class="text-muted mb-0">
+                            {{ causes }}  
+                        </p>
+                    </div>
+
+                    <div class="card shadow-sm p-4 mb-4 border-start border-success border-2">
+                        <h5 class="text-success">🌿 Organic Control</h5>
+                        <p class="text-muted mb-0">
+                            {{ organic_control }}
+                        </p>
+                    </div>
+
+                    <div class="card shadow-sm p-4 mb-4 border-start border-primary border-2">
+                        <h5 class="text-primary">🧪 Chemical Control</h5>
+                        <p class="text-muted mb-0">
+                            {{ chemical_control }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ================= Trust Disclaimer ================= -->
+            {% if prediction %}
+            <div class="row justify-content-center mt-4">
+                <div class="col-lg-10">
+
+                    <div class="alert alert-warning shadow-sm">
+                        <strong>⚠️ Disclaimer:</strong>
+                        This prediction is generated by an AI model trained on image data,
+                        results should be used as decision support only.
+                        For critical conditions consult an agricultural expert.
+                    </div>
+
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ================= ADVANCED ANALYSIS BUTTON ================= -->
+            {% if prediction %}
+            <div class="row justify-content-center mt-3">
+                <div class="col text-center">
+                    <button class="btn btn-outline-success"
+                            onclick="toggleAdvanced()">
+                        Advanced Analysis
+                    </button>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- ================= ADVANCED ANALYSIS (BAR CHART ONLY) ================= -->
+            {% if prediction and chart_labels %}
+            <div id="advancedSection" style="display:none;" class="mt-5">
+
+                <h4 class="text-center text-success mb-4">
+                    Prediction Confidence Distribution
+                </h4>
+
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <canvas id="confidenceChart" height="120"></canvas>
+                    </div>
+                </div>
+
+            </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</section>
+{% endif %}
+
+    <!-- ================= JS ================= -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        uploadText.innerText = "Image selected successfully";
+    </script>
+
+    <script>
+    function toggleAdvanced() {
+        const section = document.getElementById("advancedSection");
+        section.style.display =
+            section.style.display === "none" ? "block" : "none";
+    }
+    </script>
+
+    {% if chart_labels %}
+    <script>
+    const ctx = document.getElementById('confidenceChart');
+    if (ctx) {
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {{ chart_labels|safe }},
+                datasets: [{
+                    label: 'Confidence (%)',
+                    data: {{ chart_values|safe }},
+                    backgroundColor: '#4caf50'
+                }]
+            },
+            options: {
+                scales: {
+                    y: { beginAtZero: true, max: 100 }
+                }
+            }
+        });
+    }
+    </script>
+    {% endif %}
+
+
+
+
+<!-- HOW TO USE SECTION -->
+<section class="how-to-use-section">
+
+    <h2 style="font-family: Times New Roman;font-size: 50px;font-weight: 500;margin-bottom: 50px;">— How to Use —</h2>
+
+    <p class="how-desc" style="font-size: 18px;">
+        Follow this short walkthrough to understand about disease, how to upload an image
+        and get accurate disease predictions.
+    </p>
+    <div class="video-wrapper">
+        <div class="video-thumbnail" id="videoThumb">
+            <img src="{% static 'images/Thumbnail_Image.png' %}" alt="How to use thumbnail">
+            <div class="play-btn">▶</div>
+        </div>
+        <video id="howVideo" controls>
+            <source src="{% static 'images/how_to_use_video.mp4' %}" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+
+    <script>
+    const thumb = document.getElementById("videoThumb");
+    const video = document.getElementById("howVideo");
+    
+    thumb.addEventListener("click", () => {
+        thumb.style.display = "none";
+        video.style.display = "block";
+        video.play();
+    });
+    </script>
+
+</section>
+
+
+<!-- SCROLL UP -->
+<div class="scroll-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- ================= SCROLL ANIMATION (Fade-in on scroll) ================= -->
+<script>
+const observer = new IntersectionObserver(entries =>{
+    entries.forEach(entry => {
+        if (entry.isIntersecting){
+            entry.target.classList.add('show');
+        }});
+    },{ threshold: 0.2 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<style>
+.fade-in{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+.fade-in.show{
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-grid">
+           <div>
+               <h3>Newsletter</h3>
+               <p>
+                   An automated disease detection system is needed to help distinguish plant infections
+                   by the plant's appearance and visual manifestations could be of incredible 
+                   assistance to novices in the horticultural.
+               </p>
+            </div>
+
+           <div>
+              <h4>Quick Links</h4>
+              <a href="{% url 'home' %}">Home</a><br>
+              <a href="{% url 'predict' %}">Prediction</a><br>
+              <a href="{% url 'about' %}">About</a><br>
+              <a href="{% url 'contact' %}">Contact</a>
+           </div>
+
+           <div>
+                <h4>Our Contacts</h4>
+                <p>𖤣   Noida, India</p>
+                <p>☎  +91 8923423777</p>
+                <p>✉︎  9harshitvishnoi2003@gmail.com</p>              
+           </div>
+    </div>
+
+        <div class="footer-bottom">
+            @ 2026 Sugarcane Disease Detection | Final Year Project
+        </div>
+    </footer>
+
+   <script>
+   const form = document.querySelector("form");
+   const loader = document.getElementById("loader");
+   if (form) {
+        form.addEventListener("submit", () => {
+            loader.style.display = "block";
+        });
+    }
+   </script>
+
+    <script>
+    const imageInput = document.getElementById("imageInput");
+    const uploadText = document.getElementById("uploadText");
+    const previewImage = document.getElementById("previewImage");
+    const defaultPreview = document.getElementById("defaultPreview");
+
+    imageInput.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (file) {
+            // hide default preview image
+            defaultPreview.style.display = "none";
+
+            // show image name
+            uploadText.innerText = file.name;
+
+            // show selected image preview
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
+
+    {% if prediction %}
+    <script>
+    window.onload = function () {
+        document.querySelector('.prediction-fullscreen')
+            .scrollIntoView({ behavior: 'smooth' });
+    };
+    </script>
+    {% endif %}
+
+
+</body>
+</html>

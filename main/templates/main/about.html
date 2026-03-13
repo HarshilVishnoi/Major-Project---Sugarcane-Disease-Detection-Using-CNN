@@ -1,0 +1,519 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>About | SugarcaneAI</title>
+
+<style>
+    :root{
+      --dark-green:#1f3b1f;
+      --light-bg:#fafcf8;
+      --text-green:#4f6f52;
+      --card-bg:#ffffff;
+    }
+
+    /* GLOBAL */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      background: #f8fbf8;
+    }
+
+    /* NAVBAR */
+    .navbar{
+      position: sticky;
+      top: 0;
+      z-index: 1000; 
+      background:var(--dark-green);
+      padding:30px 100px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      transition: box-shadow 0.3s ease;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+
+    .nav-logo{
+      height: 50px;
+      max-height: 48px;
+      width: auto;
+      border-radius: 50%;
+    }
+
+
+    .nav-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: #ffffff;
+        letter-spacing: 1px;
+        font-family: 'Poppins', sans-serif;
+    }
+
+
+    .nav-subtitle {
+        display: block;
+        font-size: 14px;
+        color: #b7e4b7;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 35px;
+    }
+
+    .nav-links a{
+      color:#e9f3ea;
+      text-decoration:none;
+      font-size:18px;
+      position:relative;
+    }
+    .nav-links a::after{
+      content:"";
+      position:absolute;
+      left:0;bottom:-6px;
+      width:0;height:2px;
+      background:#cfe3d1;
+      transition:.3s;
+    }
+    .nav-links a:hover::after{width:100%;}
+
+
+/* ========== HERO ========== */
+.about-hero {
+  padding: 90px 10%;
+  text-align: center;
+  background: linear-gradient(135deg, #eef6ee, #f6fbf6);
+}
+
+.hero-title {
+  text-align: center;
+  font-size: 34px;
+  color: #1f3b1f;
+  margin-bottom: 60px;
+}
+
+.about-hero h1 {
+  font-size: 42px;
+  color: #1f3b1f;
+  margin-bottom: 15px;
+}
+
+.about-hero p {
+  font-size: 18px;
+  color: #5f6f60;
+  max-width: 900px;
+  margin: auto;
+  line-height: 1.7;
+}
+
+img:hover {
+  transform: translateY(-6px);
+  transition: 0.4s ease;
+}
+
+/* SCROLL UP */
+.scroll-up{
+    position:fixed;
+    right:22px;bottom:24px;
+    width:55px;height:55px;
+    border-radius:50%;
+    background:#1f3b1f;
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 8px 20px rgba(0,0,0,.3);
+}
+
+/* ========== SECTIONS ========== */
+.about-section {
+  padding: 80px 10%;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 34px;
+  color: #1f3b1f;
+  margin-bottom: 60px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 30px;
+}
+
+.info-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 60px rgba(31,59,31,0.25);
+}
+
+.info-card h3 {
+  color: #1f3b1f;
+  margin-bottom: 12px;
+}
+
+.info-card p,
+.info-card li {
+  color: #5f6f60;
+  line-height: 1.6;
+  font-size: 15px;
+}
+
+.info-card ul {
+  padding-left: 18px;
+}
+
+
+
+/* ========== STEPS ========== */
+.step {
+  margin-left: 12%;
+  display: flex;
+  gap: 30px;
+  margin-bottom: 30px;
+  max-width: 1200px;
+  font-size: 17px;
+  color:#5f6f60;
+}
+
+.step span {
+  width: 42px;
+  height: 42px;
+  background: #1f3b1f;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+
+    /* FOOTER */
+    footer{
+      background:#162b16;
+      color:#dfeee0;
+      padding:64px 72px 32px;
+    }
+
+    .footer-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+      gap:40px;
+      margin-bottom:32px;
+      justify-content: center;
+      text-align: center;
+    }
+
+    footer h3{
+      margin-bottom:10px;
+      color:#ffffff;
+      justify-content: center;
+      text-align: center;
+    }
+
+    footer p, footer a{
+      font-size:14px;
+      line-height:1.7;
+      color:#cfe3d1;
+      text-decoration:none;
+      justify-content: center;
+      text-align: center;
+    }
+
+    footer a:hover{
+      color:#ffffff;
+    }
+
+    .footer-bottom{
+      text-align:center;
+      font-size:14px;
+      color:#bcd4be;
+      border-top:1px solid rgba(255,255,255,.15);
+      padding-top:20px;
+    }
+
+/* ========== ANIMATION ========== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.6s ease;
+}
+.fade-in.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .about-hero h1 { font-size: 32px; }
+  .navbar { flex-direction: column; gap: 10px; }
+}
+
+</style>
+</head>
+<body>
+
+
+
+<!-- ===== NAVBAR ===== -->
+  <nav class="navbar">
+    
+    <div class="nav-left">
+        <img src="{% static 'images/Logo1.png' %}" class="nav-logo">
+        <div>
+            <span class="nav-title">CROPGUARD</span>
+            <small class="nav-subtitle">Sugarcane Disease Detection</small>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="{% url 'home' %}">Home</a>
+        <a href="{% url 'predict' %}">Prediction</a>
+        <a href="{% url 'about' %}">About</a>
+        <a href="{% url 'contact' %}">Contact</a>
+    </div>
+  </nav>
+
+<!-- ===== HERO ===== -->
+<section class="about-hero fade-in">
+  <div class="info-grid" style="align-items:center;">
+    
+    <div>
+      <h2 class="hero-title" style="font-family:Times New Roman;color: var(--dark-green);margin-bottom: 14px;">What is CropGuard ?</h2>
+      <p style="color:#5f6f60; line-height:1.6;">
+        CropGuard is a deep learning–powered web application designed to
+        identify sugarcane leaf diseases using Convolutional Neural Networks.
+        The system helps farmers and researchers detect diseases early and
+        make informed decisions with confidence-based predictions.
+      </p>
+    </div>
+
+    <div>
+      <img src="{% static 'images/about_image1.png' %}"
+           style="width:70%; max-width:420px; border-radius:18px;
+                  box-shadow: 0 25px 60px rgba(31,59,31,0.25);">
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ===== HOW IT WORKS ===== -->
+<section class="about-section fade-in">
+  <h2 class="section-title" style="font-family:Times New Roman;font-size: 40px;margin-bottom: 85px;">— How Prediction Works —</h2>
+
+  <div class="step"><span>1</span><p style="text-align: center;">The user uploads a clear image of a sugarcane leaf through the web-based prediction interface.</p></div>
+  <div class="step"><span>2</span><p style="text-align: center;">The uploaded image is resized, normalized, and preprocessed to ensure consistent input quality for the model.</p></div>
+  <div class="step"><span>3</span><p style="text-align: center;">The CNN model extracts important visual features such as color variations, textures, and disease-related patterns.</p></div>
+  <div class="step"><span>4</span><p style="text-align: center;">Extracted features are compared against trained disease categories to determine the most probable class.</p></div>
+  <div class="step"><span>5</span><p style="text-align: center;">System predicts the disease along with a confidence score and advance analysis indicating prediction reliability.</p></div>
+</section>
+
+
+<!-- ===== MODEL & TECH ===== -->
+<section class="about-section fade-in">
+  <h2 class="section-title" style="font-family:Times New Roman;font-size: 40px;margin-bottom: 80px;">— Model & Technology —</h2>
+
+  <div class="info-grid">
+    <div class="info-card">
+      <h3>Dataset</h3>
+      <p>Labeled sugarcane leaf images with healthy and diseased samples.</p>
+    </div>
+    <div class="info-card">
+      <h3>Deep Learning</h3>
+      <p>CNN architecture using TensorFlow & Keras.</p>
+    </div>
+    <div class="info-card">
+      <h3>Backend</h3>
+      <p>Django-based server for secure real-time predictions.</p>
+    </div>
+    <div class="info-card">
+      <h3>Security</h3>
+      <p>CSRF protection and secure file handling.</p>
+    </div>
+  </div>
+</section>
+
+<h2 class="section-title" style="font-family:Times New Roman;font-size: 40px;margin-bottom: 1px;margin-top: 80px;">— Working & Training —</h2>
+
+<section class="about-section fade-in">
+  <div class="info-grid">
+
+    <div class="info-card">
+      <h3>How the AI Works</h3>
+      <ul>
+        <li>Analyzes color, texture & lesion patterns</li>
+        <li>Learns hierarchical features via CNN layers</li>
+        <li>Selects disease with highest confidence score</li>
+      </ul>
+    </div>
+
+    <div class="info-card">
+      <h3>Model Training</h3>
+      <ul>
+        <li>Images resized & normalized</li>
+        <li>Data augmentation applied</li>
+        <li>Trained using CNN + Adam optimizer</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- =====System Reliability ===== -->
+<section class="about-section fade-in">
+  <h1 class="section-title" style="font-family:Times New Roman;font-size: 40px;margin-bottom: 80px;">— System Reliability —</h1>
+
+  <div class="info-grid">
+
+    <div class="info-card">
+      <h3>Performance</h3>
+      <p>
+        The model performs reliably on unseen images and provides
+        confidence scores to help users assess prediction certainty.
+      </p>
+    </div>
+
+
+    <div class="info-card">
+      <h3>Security</h3>
+      <p>
+        Django’s CSRF protection and secure file handling ensure
+        user data and model safety.
+      </p>
+    </div>
+
+
+    <div class="info-card">
+      <h3>Limitations</h3>
+      <p>
+        Accuracy depends on image quality and visually similar
+        diseases may occasionally overlap.
+      </p>
+    </div>
+
+  </div>
+</section>
+
+
+<section class="about-hero fade-in">
+  <div class="info-grid" style="align-items:center;">
+    
+    <div>
+      <img src="{% static 'images/about_image2.png' %}"
+           style="width:70%; max-width:420px; border-radius:18px;
+                  box-shadow: 0 25px 60px rgba(31,59,31,0.25);">
+    </div>
+
+    <div>
+      <h2 class="hero-title" style="font-family:Times New Roman;color: var(--dark-green);margin-bottom: 40px;font-size: 34px;">— Conclusion —</h2>
+      <ul style="color:#5f6f60; line-height:1.9;font-size: 17px;width: 650px;text-align: left;">
+        <li>Demonstrates effective deep learning–based early and accurate disease detection.</li>
+        <li>Enables timely, informed decisions through intuitive image-based analysis.</li>
+        <li>Supports precision agriculture by improving crop health and reducing losses.</li>
+      </ul>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- SCROLL UP -->
+<div class="scroll-up" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</div>
+
+<!-- ================= SCROLL ANIMATION (Fade-in on scroll) ================= -->
+<script>
+const observer = new IntersectionObserver(entries =>{
+    entries.forEach(entry => {
+        if (entry.isIntersecting){
+            entry.target.classList.add('show');
+        }});
+    },{ threshold: 0.2 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+<style>
+.fade-in{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.6s ease;
+}
+.fade-in.show{
+    opacity: 1;
+    transform: translateY(0);
+}
+</style>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <h3>Newsletter</h3>
+      <p>
+        An automated disease detection system is needed to help distinguish plant infections
+        by the plant's appearance and visual manifestations could be of incredible 
+        assistance to novices in the horticultural.
+      </p>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <p><a href="{% url 'home' %}">Home</a></p>
+      <p><a href="{% url 'predict' %}">Prediction</a></p>
+      <p><a href="{% url 'about' %}">About</a></p>
+      <p><a href="{% url 'contact' %}">Contact</a></p>
+    </div>
+
+    <div>
+        <h4>Our Contacts</h4>
+        <p>𖤣   Noida, India</p>       
+        <p>☎  +91 8923423777</p>
+        <p>✉︎  9harshitvishnoi2003@gmail.com</p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    @ 2026 Sugarcane Disease Detection | Final Year Project
+  </div>
+</footer>
+
+
+<script>
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
+    }
+  });
+});
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
