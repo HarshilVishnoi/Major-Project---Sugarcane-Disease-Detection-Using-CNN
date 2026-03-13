@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ya^$v2x7s=lt5zp(+v@!psx_h^q=wxl#%*=n4jhtc8n=)#!xpw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -127,11 +127,3 @@ STATICFILES_DIRS = [ BASE_DIR / 'main/static' ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smt-rely.brevo.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
-EMAIL_HOST_USER = '9harshitvishnoi2003@gmail.com'
-EMAIL_HOST_PASSWORD = 'avoslsjquunsfoke'
