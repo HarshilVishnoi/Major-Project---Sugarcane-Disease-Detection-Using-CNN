@@ -4,7 +4,7 @@ from PIL import Image
 
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 
 from django.core.mail import send_mail
 from django.conf import settings
@@ -173,7 +173,7 @@ DISEASE_META = {
 }
 
 
-model = load_model(MODEL_PATH)
+#model = load_model(MODEL_PATH)
 
 
 def home(request):

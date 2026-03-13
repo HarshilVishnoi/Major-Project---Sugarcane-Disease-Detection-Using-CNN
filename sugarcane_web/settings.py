@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-ya^$v2x7s=lt5zp(+v@!psx_h^q=wxl#%*=n4jhtc8n=)#!xpw'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["cropguard-ai-zio3.onrender.com"]
 
 
 # Application definition
