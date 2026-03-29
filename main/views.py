@@ -4,17 +4,11 @@ from PIL import Image
 
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
-from tensorflow.keras.models import load_model
+#from tensorflow.keras.models import load_model
 
 from django.core.mail import send_mail
 from django.conf import settings
 
-try:
-    from tensorflow.keras.models import load_model
-    model = load_model("model/sugarcane_model.h5")
-except Exception as e:
-    print("Model loading error:", e)
-    model = None
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'model/sugarcane_model.h5')
 
 CLASS_NAMES = [
@@ -179,7 +173,7 @@ DISEASE_META = {
 }
 
 
-model = load_model(MODEL_PATH)
+#model = load_model(MODEL_PATH)
 
 
 def home(request):
